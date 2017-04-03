@@ -31,14 +31,17 @@ public class SMS {
 
     public String send(@CheckFormat(regexp = "(?i)^\\s*\\w+\\s*\\w*\\s*$") String message) throws ClassNotFoundException {
         String[] params = message.split("\\s");
+        String returnMessage = "";
         switch (params.length) {
             case 1:
                 switch (format(params[0])) {
                     case "START":
-                        session = new Session();
+                        session.setCurrentRoom("Room1");
+                        session.setGameState(0);
+                        returnMessage = "Your session was reset.";
                         break;
                     case "HINT":
-                        printHint();
+                        returnMessage = printHint();
                         break;
                 }
                 break;
@@ -46,21 +49,24 @@ public class SMS {
                 String[] command = format(params[0], params[1]);
                 switch (command[0]) {
                     case "REGISTER":
-                        session = new Session(params[1], "Room1", 0);
+                        session = new Session();
+                        session.setName(command[1]);
+                        returnMessage = "Registered as " + session.getName() + " successfully.";
                         break;
                     default:
                         HashMap<String, Object> ret = rcm.processRoom(session.getCurrentRoom(), session.getGameState(), command[0] + " " + command[1]);
                         session.setGameState((Integer) ret.get("status"));
+                        returnMessage = String.valueOf(ret.get("message"));
                     case "GO":
                         session.setCurrentRoom(command[1]);
                         break;
                 }
                 break;
         }
-        return "";
+        return returnMessage;
     }
 
-    private void printHint() {
+    private String printHint() {
         //TODO: Print commands
     }
 
