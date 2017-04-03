@@ -5,6 +5,8 @@ import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
 import room.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -66,8 +68,15 @@ public class SMS {
         return returnMessage;
     }
 
-    private String printHint() {
-        //TODO: Print commands
+    private String printHint() throws ClassNotFoundException {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        pw.println("Available commands:");
+        for (Method m :
+                Class.forName("room." + session.getCurrentRoom()).getMethods()) {
+            pw.println(m.getName());
+        }
+        return sw.toString();
     }
 
     private String format(String command) {
