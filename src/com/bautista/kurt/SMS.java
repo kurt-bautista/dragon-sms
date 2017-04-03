@@ -6,7 +6,6 @@ import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
 import room.*;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,17 +25,43 @@ public class SMS {
         this.rcm = new RoomCommandManager();
     }
 
+    public SMS(Session session) {
+        this.session = session;
+    }
+
     public String send(@CheckFormat(regexp = "(?i)^\\s*\\w+\\s*\\w*\\s*$") String message) throws ClassNotFoundException {
         String[] params = message.split("\\s");
         switch (params.length) {
             case 1:
-                rcm.processRoom(session.getCurrentRoom(), session.getGameState(), format(params[0]));
+                switch (format(params[0])) {
+                    case "START":
+                        session = new Session();
+                        break;
+                    case "HINT":
+                        printHint();
+                        break;
+                }
                 break;
             case 2:
-                rcm.processRoom(session.getCurrentRoom(), session.getGameState(), format(params[0], params[1]));
+                String[] command = format(params[0], params[1]);
+                switch (command[0]) {
+                    case "REGISTER":
+                        session = new Session(params[1], "Room1", 0);
+                        break;
+                    default:
+                        HashMap<String, Object> ret = rcm.processRoom(session.getCurrentRoom(), session.getGameState(), command[0] + " " + command[1]);
+                        session.setGameState((Integer) ret.get("status"));
+                    case "GO":
+                        session.setCurrentRoom(command[1]);
+                        break;
+                }
                 break;
         }
         return "";
+    }
+
+    private void printHint() {
+        //TODO: Print commands
     }
 
     private String format(String command) {
@@ -44,7 +69,7 @@ public class SMS {
         return ret;
     }
 
-    private String format(String command, String parameter) throws ClassNotFoundException {
+    private String[] format(String command, String parameter) throws ClassNotFoundException {
         String[] parts = {command.toUpperCase(), parameter};
         switch (parts[0]) {
             case "REGISTER":
@@ -61,7 +86,7 @@ public class SMS {
                 parts[0] = methods.get(parts[0]);
                 break;
         }
-        return parts[0] + " " + parts[1];
+        return parts;
     }
 
     public Session getSession() {
