@@ -55,7 +55,7 @@ public class SMS {
             default:
                 HashMap<String, String> methods = new HashMap<>();
                 for (Method m :
-                        Class.forName(session.getCurrentRoom()).getMethods()) {
+                        Class.forName("room." + session.getCurrentRoom()).getMethods()) {
                     methods.put(m.getName().toUpperCase(), m.getName());
                 }
                 parts[0] = methods.get(parts[0]);
