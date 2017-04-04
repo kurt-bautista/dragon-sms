@@ -13,6 +13,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         while (true) {
             String s = sc.nextLine();
+            if (s.trim().equalsIgnoreCase("quit")) break;
             try {
                 System.out.println(sms.send(s));
             } catch (ClassNotFoundException e) {
