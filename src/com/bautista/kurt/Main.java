@@ -9,11 +9,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        //TODO: Everything
-        /*System.out.printf("ulels %s haha \n", 6.9);
-        ScanResult results = new FastClasspathScanner("room").scan();
-        List<String> allResults = results.getNamesOfAllStandardClasses();
-        System.out.println(allResults);*/
         SMS sms = new SMS();
         Scanner sc = new Scanner(System.in);
         while (true) {
