@@ -32,11 +32,12 @@ public class SMS {
     }
 
     public String send(@CheckFormat(regexp = "(?i)^\\s*\\w+\\s*\\w*\\s*$") String message) throws ClassNotFoundException {
-        String[] params = message.split("\\s");
+        String[] params = message.trim().split("\\s+");
         String returnMessage = "";
         switch (params.length) {
             case 1:
-                switch (format(params[0])) {
+                String commandString = format(params[0]);
+                switch (commandString) {
                     case "START":
                         session.setCurrentRoom("Room1");
                         session.setGameState(0);
@@ -44,6 +45,11 @@ public class SMS {
                         break;
                     case "HINT":
                         returnMessage = printHint();
+                        break;
+                    default:
+                        HashMap<String, Object> ret = rcm.processRoom(session.getCurrentRoom(), session.getGameState(), commandString);
+                        session.setGameState((Integer) ret.get("status"));
+                        returnMessage = String.valueOf(ret.get("message"));
                         break;
                 }
                 break;
@@ -55,13 +61,18 @@ public class SMS {
                         session.setName(command[1]);
                         returnMessage = "Registered as " + session.getName() + " successfully.";
                         break;
-                    default:
-                        HashMap<String, Object> ret = rcm.processRoom(session.getCurrentRoom(), session.getGameState(), command[0] + " " + command[1]);
-                        session.setGameState((Integer) ret.get("status"));
-                        returnMessage = String.valueOf(ret.get("message"));
                     case "GO":
-                        session.setCurrentRoom(command[1]);
+                        if (command[1].matches("(?i)(room[1-5]{1})")) {
+                            session.setCurrentRoom(command[1]);
+                            returnMessage = "You are now in " + session.getCurrentRoom();
+                        }
+                        else returnMessage = "Room does not exist";
                         break;
+                    default:
+                    HashMap<String, Object> ret = rcm.processRoom(session.getCurrentRoom(), session.getGameState(), command[0] + " " + command[1]);
+                    session.setGameState((Integer) ret.get("status"));
+                    returnMessage = String.valueOf(ret.get("message"));
+                    break;
                 }
                 break;
         }
@@ -74,13 +85,21 @@ public class SMS {
         pw.println("Available commands:");
         for (Method m :
                 Class.forName("room." + session.getCurrentRoom()).getMethods()) {
-            pw.println(m.getName());
+            if (m.getDeclaringClass() == Class.forName("room." + session.getCurrentRoom()))
+                pw.println(m.getName());
         }
         return sw.toString();
     }
 
-    private String format(String command) {
+    private String format(String command) throws ClassNotFoundException {
         String ret = command.toUpperCase();
+        HashMap<String, String> methods = new HashMap<>();
+        for (Method m :
+                Class.forName("room." + session.getCurrentRoom()).getMethods()) {
+            if (m.getDeclaringClass() == Class.forName("room." + session.getCurrentRoom()))
+                methods.put(m.getName().toUpperCase(), m.getName());
+        }
+        if (methods.containsKey(ret)) ret = methods.get(ret);
         return ret;
     }
 
@@ -96,7 +115,8 @@ public class SMS {
                 HashMap<String, String> methods = new HashMap<>();
                 for (Method m :
                         Class.forName("room." + session.getCurrentRoom()).getMethods()) {
-                    methods.put(m.getName().toUpperCase(), m.getName());
+                    if (m.getDeclaringClass() == Class.forName("room." + session.getCurrentRoom()))
+                        methods.put(m.getName().toUpperCase(), m.getName());
                 }
                 parts[0] = methods.get(parts[0]);
                 break;
