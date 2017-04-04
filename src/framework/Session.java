@@ -1,4 +1,4 @@
-package com.bautista.kurt;
+package framework;
 
 /**
  * Created by kurtv on 3/30/17.
@@ -19,6 +19,11 @@ public class Session {
         this.name = name;
         this.currentRoom = currentRoom;
         this.gameState = gameState;
+    }
+
+    public void reset() {
+        currentRoom = "Room1";
+        gameState = 0;
     }
 
     public String getName() {
