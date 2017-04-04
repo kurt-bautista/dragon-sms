@@ -22,6 +22,9 @@ public class Main {
                 System.out.println(sms.send(s));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+            } catch (RuntimeException e) {
+                System.out.println("Invalid command/parameters.");
+                System.out.printf("Error message: %s", e.getMessage());
             }
         }
     }

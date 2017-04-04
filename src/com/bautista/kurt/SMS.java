@@ -31,7 +31,7 @@ public class SMS {
         this.session = session;
     }
 
-    public String send(@CheckFormat(regexp = "(?i)^\\s*\\w+\\s*\\w*\\s*$") String message) throws ClassNotFoundException {
+    public String send(@CheckFormat(regexp = "(?i)^\\s*\\w+\\s*\\w*\\s*$") String message) throws ClassNotFoundException, RuntimeException {
         String[] params = message.trim().split("\\s+");
         String returnMessage = "";
         switch (params.length) {
@@ -64,9 +64,9 @@ public class SMS {
                     case "GO":
                         if (command[1].matches("(?i)(room[1-5]{1})")) {
                             session.setCurrentRoom(command[1]);
-                            returnMessage = "You are now in " + session.getCurrentRoom();
+                            returnMessage = "You are now in " + session.getCurrentRoom() + ".";
                         }
-                        else returnMessage = "Room does not exist";
+                        else returnMessage = "Room does not exist.";
                         break;
                     default:
                     HashMap<String, Object> ret = rcm.processRoom(session.getCurrentRoom(), session.getGameState(), command[0] + " " + command[1]);
