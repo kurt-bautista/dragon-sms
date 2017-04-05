@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by kurtv on 3/30/17.
  */
-public class SMS {
+public class SMS implements Sender {
 
     private Session session;
 
