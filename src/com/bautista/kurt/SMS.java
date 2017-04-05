@@ -31,52 +31,17 @@ public class SMS {
 
     public String send(@CheckFormat(regexp = "(?i)^\\s*\\w+\\s*\\w*\\s*$") String message) throws Exception {
         String[] params = message.trim().split("\\s+");
-        String returnMessage = "";
         Processor processor = new Processor();
+        return processor.process(format(params), session);
+    }
+
+    private String format(String params[]) {
         switch (params.length) {
             case 1:
-                String commandString = format(params[0]);
-                returnMessage = processor.process(commandString, session);
-                break;
-            case 2:
-                String[] command = format(params[0], params[1]);
-                returnMessage = processor.process(command[0] + " " + command[1], session);
-                break;
-        }
-        return returnMessage;
-    }
-
-    private String format(String command) throws ClassNotFoundException {
-        String ret = command.toUpperCase();
-        HashMap<String, String> methods = new HashMap<>();
-        for (Method m :
-                Class.forName("room." + session.getCurrentRoom()).getMethods()) {
-            if (m.getDeclaringClass() == Class.forName("room." + session.getCurrentRoom()))
-                methods.put(m.getName().toUpperCase(), m.getName());
-        }
-        if (methods.containsKey(ret)) ret = methods.get(ret);
-        return ret;
-    }
-
-    private String[] format(String command, String parameter) throws ClassNotFoundException {
-        String[] parts = {command.toUpperCase(), parameter};
-        switch (parts[0]) {
-            case "REGISTER":
-                break;
-            case "GO":
-                parts[1] = "Room" + parameter.substring(4);
-                break;
+                return params[0].toUpperCase();
             default:
-                HashMap<String, String> methods = new HashMap<>();
-                for (Method m :
-                        Class.forName("room." + session.getCurrentRoom()).getMethods()) {
-                    if (m.getDeclaringClass() == Class.forName("room." + session.getCurrentRoom()))
-                        methods.put(m.getName().toUpperCase(), m.getName());
-                }
-                parts[0] = methods.get(parts[0]);
-                break;
+                return params[0].toUpperCase() + " " + params[1];
         }
-        return parts;
     }
 
     public Session getSession() {

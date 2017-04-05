@@ -1,6 +1,7 @@
 package framework.commands;
 
 import framework.Session;
+import framework.annotations.CommandAnnotation;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -9,14 +10,11 @@ import java.lang.reflect.Method;
 /**
  * Created by kurtv on 4/4/17.
  */
+@CommandAnnotation(commandName = "HINT")
 public class HintCommand implements Command {
 
     @Override
     public String process(String command, Session session) throws ClassNotFoundException {
-        return printHint(session);
-    }
-
-    private String printHint(Session session) throws ClassNotFoundException {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         pw.println("Available commands:");
@@ -25,6 +23,8 @@ public class HintCommand implements Command {
             if (m.getDeclaringClass() == Class.forName("room." + session.getCurrentRoom()))
                 pw.println(m.getName());
         }
+        pw.print("start\nquit\n");
         return sw.toString();
     }
+
 }
