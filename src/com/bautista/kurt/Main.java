@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         SMS sms = new SMS();
         AnnotationInvocationHandler invocationHandler = new AnnotationInvocationHandler(sms);
-        Sender proxy = (Sender) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),new Class[] {Sender.class}, invocationHandler);
+        Sender proxy = (Sender) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[] {Sender.class}, invocationHandler);
         Scanner sc = new Scanner(System.in);
         while (true) {
             String s = sc.nextLine();

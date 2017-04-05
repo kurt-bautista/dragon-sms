@@ -36,12 +36,9 @@ public class SMS implements Sender {
     }
 
     private String format(String params[]) {
-        switch (params.length) {
-            case 1:
-                return params[0].toUpperCase();
-            default:
-                return params[0].toUpperCase() + " " + params[1];
-        }
+        if (params.length == 1)
+            return params[0].toUpperCase();
+        return params[0].toUpperCase() + " " + params[1];
     }
 
     public Session getSession() {
