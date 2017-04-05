@@ -13,12 +13,7 @@ public class CheckFormatValidator implements ValidationHandler {
     public void process(Object o, Parameter p, Object[] args) {
         CheckFormat cf = p.getAnnotation(CheckFormat.class);
         String userInput = args[0].toString();
-
-        System.out.println(userInput + " " + cf.regexp());
-        System.out.println(userInput.matches(cf.regexp()));
         if(!userInput.matches(cf.regexp()))
-        {
-            throw new RuntimeException("Invalid input!");
-        }
+            throw new RuntimeException("Invalid input format.");
     }
 }

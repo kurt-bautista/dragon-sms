@@ -19,13 +19,12 @@ public class Validator
     public Validator() throws Exception
     {
         // init map by scanning
-        ScanResult results = new FastClasspathScanner("validation").scan();
+        ScanResult results = new FastClasspathScanner("framework.validation").scan();
         List<String> allResults = results.getNamesOfClassesWithAnnotation(ValidationAnnotation.class);
         for (String s : allResults)
         {
             Class c = Class.forName(s);
             ValidationAnnotation va = (ValidationAnnotation) c.getAnnotation(ValidationAnnotation.class);
-            System.out.println(va);
             map.put(va.target(), (ValidationHandler) c.newInstance());
         }
 

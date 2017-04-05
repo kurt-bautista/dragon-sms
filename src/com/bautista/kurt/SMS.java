@@ -29,7 +29,7 @@ public class SMS implements Sender {
         this.session = session;
     }
 
-    public String send(@CheckFormat(regexp = "(?i)^\\s*\\w+\\s*\\w*\\s*$") String message) throws Exception {
+    public String send(String message) throws Exception {
         String[] params = message.trim().split("\\s+");
         Processor processor = new Processor();
         return processor.process(format(params), session);
