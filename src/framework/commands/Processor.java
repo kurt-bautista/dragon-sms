@@ -11,9 +11,10 @@ import java.util.List;
  * Created by kurtv on 4/4/17.
  */
 public class Processor {
-    private HashMap<String, Command> map = new HashMap<>();
+    private HashMap<String, Command> map;
 
     public Processor() throws Exception {
+        map = new HashMap<>();
         ScanResult results = new FastClasspathScanner("framework.commands").scan();
         List<String> allResults = results.getNamesOfClassesWithAnnotation(CommandAnnotation.class);
         for (String s : allResults)

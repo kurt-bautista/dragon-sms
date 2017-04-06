@@ -27,8 +27,7 @@ public class SMS implements Sender {
 
     public String send(String message) throws Exception {
         String[] params = message.trim().split("\\s+");
-        Processor processor = new Processor();
-        return processor.process(format(params), session);
+        return new Processor().process(format(params), session);
     }
 
     private String format(String params[]) {
