@@ -4,7 +4,6 @@ import framework.Session;
 import framework.annotations.CommandAnnotation;
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
-
 import java.util.HashMap;
 import java.util.List;
 

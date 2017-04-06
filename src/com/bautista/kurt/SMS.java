@@ -1,13 +1,9 @@
 package com.bautista.kurt;
 
-import framework.annotations.CheckFormat;
 import framework.Session;
 import framework.commands.Processor;
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.List;
 
 /**

@@ -1,11 +1,7 @@
 package com.bautista.kurt;
 
 import framework.AnnotationInvocationHandler;
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
-
 import java.lang.reflect.Proxy;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {

@@ -2,7 +2,6 @@ package framework.commands;
 
 import framework.Session;
 import framework.annotations.CommandAnnotation;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;

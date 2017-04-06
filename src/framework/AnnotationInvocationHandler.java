@@ -1,10 +1,9 @@
 package framework;
 
 import com.bautista.kurt.Sender;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import validation.Validator;
+import framework.validation.Validator;
 /**
  * Created by kurtv on 4/5/17.
  */

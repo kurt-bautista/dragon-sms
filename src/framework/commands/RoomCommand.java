@@ -3,7 +3,6 @@ package framework.commands;
 import framework.Session;
 import framework.annotations.CommandAnnotation;
 import room.RoomCommandManager;
-
 import java.lang.reflect.Method;
 import java.util.HashMap;
 

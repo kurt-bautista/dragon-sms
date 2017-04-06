@@ -2,7 +2,6 @@ package framework.validation;
 
 import framework.annotations.CheckFormat;
 import framework.annotations.ValidationAnnotation;
-
 import java.lang.reflect.Parameter;
 
 /**
