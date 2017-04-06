@@ -1,4 +1,4 @@
-package com.bautista.kurt;
+package solution;
 
 import framework.annotations.CheckFormat;
 

@@ -1,4 +1,4 @@
-package com.bautista.kurt;
+package solution;
 
 import framework.Session;
 import framework.commands.Processor;
