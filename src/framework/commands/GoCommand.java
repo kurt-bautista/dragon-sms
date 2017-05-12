@@ -2,6 +2,7 @@ package framework.commands;
 
 import framework.Session;
 import framework.annotations.CommandAnnotation;
+import room.GameState;
 
 /**
  * Created by kurtv on 4/4/17.
@@ -11,6 +12,8 @@ public class GoCommand implements Command {
 
     @Override
     public String process(String command, Session session) {
+        if((GameState.DEAD & session.getGameState()) == GameState.DEAD)
+            return "You are dead. Please use the START command to restart your game.";
         String[] parts = command.split("\\s+");
         parts[1] = "Room" + parts[1].substring(4);
         if (parts[1].matches("(?i)(room[1-5]{1})")) {
