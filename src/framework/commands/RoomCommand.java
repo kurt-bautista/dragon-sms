@@ -17,7 +17,6 @@ public class RoomCommand implements Command {
     public String process(String command, Session session) throws ClassNotFoundException {
         if((GameState.DEAD & session.getGameState()) == GameState.DEAD)
             return "You are dead. Please use the START command to restart your game or LOAD to go back to a previously saved state.";
-
         RoomCommandManager rcm = new RoomCommandManager();
         HashMap<String, Object> ret;
         String[] parts = command.split("\\s+");

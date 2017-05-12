@@ -3,7 +3,6 @@ package framework.commands;
 import framework.SaveStateHandler;
 import framework.Session;
 import framework.annotations.CommandAnnotation;
-import room.GameState;
 
 /**
  * Created by kurtv on 4/4/17.

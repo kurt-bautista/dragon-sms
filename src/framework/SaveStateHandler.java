@@ -15,9 +15,7 @@ public class SaveStateHandler {
     }
 
     public static synchronized SaveStateHandler getInstance() {
-        if(saveStateHandler == null) {
-            saveStateHandler = new SaveStateHandler();
-        }
+        if(saveStateHandler == null) saveStateHandler = new SaveStateHandler();
         return saveStateHandler;
     }
 

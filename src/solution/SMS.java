@@ -38,9 +38,7 @@ public class SMS implements Sender {
     }
 
     public static synchronized SMS getInstance() {
-        if(instance == null) {
-            instance = new SMS();
-        }
+        if(instance == null) instance = new SMS();
         return instance;
     }
 
