@@ -1,0 +1,4 @@
+register kurt
+start
+go room4
+answer 5

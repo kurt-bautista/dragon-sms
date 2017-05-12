@@ -1,21 +1,32 @@
 package solution;
 
-import framework.AnnotationInvocationHandler;
-import java.lang.reflect.Proxy;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         SMS sms = SMS.getInstance();
-        AnnotationInvocationHandler invocationHandler = new AnnotationInvocationHandler(sms);
-        Sender proxy = (Sender) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[] {Sender.class}, invocationHandler);
-        Scanner sc = new Scanner(System.in);
+        if(args.length == 1) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("FILE or CONSOLE?");
+            if(sc.nextLine().equalsIgnoreCase("file")) {
+                try {
+                    sms.setReader(new ReadFile(new File("src/solution/" + args[0])));
+                } catch (FileNotFoundException e) {
+                    System.out.println("File not found.");
+                    e.printStackTrace();
+                }
+            }
+        }
+
         while (true) {
-            String s = sc.nextLine();
-            if (s.trim().equalsIgnoreCase("quit")) break;
             try {
-                System.out.println(proxy.send(s));
+                if(!sms.getReader().hasNext()) sms.setReader(new ReadConsole());
+                String output = sms.read();
+                if(output.equals("quit")) break;
+                System.out.println(output);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 System.out.println();
