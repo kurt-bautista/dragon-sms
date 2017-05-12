@@ -13,7 +13,7 @@ public class GoCommand implements Command {
     @Override
     public String process(String command, Session session) {
         if((GameState.DEAD & session.getGameState()) == GameState.DEAD)
-            return "You are dead. Please use the START command to restart your game.";
+            return "You are dead. Please use the START command to restart your game or LOAD to go back to a previously saved state.";
         String[] parts = command.split("\\s+");
         parts[1] = "Room" + parts[1].substring(4);
         if (parts[1].matches("(?i)(room[1-5]{1})")) {
