@@ -37,7 +37,7 @@ public class SMS implements Sender {
         return params[0].toUpperCase() + " " + params[1];
     }
 
-    public static SMS getInstance() {
+    public static synchronized SMS getInstance() {
         if(instance == null) {
             instance = new SMS();
         }
