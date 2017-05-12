@@ -22,7 +22,7 @@ public class HintCommand implements Command {
             if (m.getDeclaringClass() == Class.forName("room." + session.getCurrentRoom()))
                 pw.println(m.getName());
         }
-        pw.print("start\nquit\n");
+        pw.print("start\nsave\nload\nquit\n");
         return sw.toString();
     }
 
