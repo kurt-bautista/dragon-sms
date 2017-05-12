@@ -12,18 +12,19 @@ import java.util.List;
 public class SMS implements Sender {
 
     private Session session;
+    private static SMS instance;
 
     ScanResult results = new FastClasspathScanner("RoomCommandManager.room").scan();
     List<String> allResults = results.getNamesOfAllStandardClasses();
 
 
-    public SMS() {
+    private SMS() {
         this.session = new Session();
     }
 
-    public SMS(Session session) {
-        this.session = session;
-    }
+//    public SMS(Session session) {
+//        this.session = session;
+//    }
 
     public String send(String message) throws Exception {
         String[] params = message.trim().split("\\s+");
@@ -34,6 +35,13 @@ public class SMS implements Sender {
         if (params.length == 1)
             return params[0].toUpperCase();
         return params[0].toUpperCase() + " " + params[1];
+    }
+
+    public static SMS getInstance() {
+        if(instance == null) {
+            instance = new SMS();
+        }
+        return instance;
     }
 
     public Session getSession() {

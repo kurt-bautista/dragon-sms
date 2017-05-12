@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        SMS sms = new SMS();
+        SMS sms = SMS.getInstance();
         AnnotationInvocationHandler invocationHandler = new AnnotationInvocationHandler(sms);
         Sender proxy = (Sender) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[] {Sender.class}, invocationHandler);
         Scanner sc = new Scanner(System.in);
